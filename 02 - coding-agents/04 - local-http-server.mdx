@@ -1,0 +1,159 @@
+# Local HTTP Server
+
+With a simple local HTTP server, you can embed any MoroboxAI game in a
+local `index.html` file, and import your agent from a separate file,
+which gets you close to how the agent will be loaded once distributed to
+the community.
+
+## Setup
+
+Please note, that while this example relies on [http-server][http-server]
+that requires you to have [npm][npm] installed, any tool of your choice for
+running a local HTTP server should do. For example, Python comes with
+the builtin module [http.server][python-http-server] that works similarly.
+
+Install `http-server` globally via npm:
+
+```bash
+npm install --g http-server
+```
+
+Create a folder where you will put `index.html`, and the files of your agent:
+
+```bash
+mkdir sample
+```
+
+Run a local HTTP server in that folder:
+
+```bash
+cd sample
+http-server
+```
+
+You should see the HTTP server starting on port 8080 by default:
+
+```bash
+Starting up http-server, serving ./
+...
+
+Available on:
+  http://127.0.0.1:8080
+Hit CTRL-C to stop the server
+```
+
+The server is now running and ready!
+
+## index.html
+
+Create `sample/index.html`, then paste the following content:
+
+```html filename="index.html"
+<html>
+<head>
+  <title>MoroboxAI Sample</title>
+  <!-- Library for embedding the MoroboxAI player -->
+  <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/moroboxai-player-web@0.1.0-alpha.47/lib/umd/moroboxai-player-web.min.js"
+  ></script>
+  <!-- Framework required by some MoroboxAI games -->
+  <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/moroxel8ai@latest/lib/umd/moroxel8ai.min.js"
+  ></script>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+  crossorigin="anonymous"
+  />
+</head>
+<body class="container">
+  <div class="row h-100 align-items-center justify-content-center">
+    <div class="col-auto">
+      <!-- Root element of the player -->
+      <div id="player"></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    // Initialize the player and load the pong game
+    MoroboxAIPlayer.init({
+      element: document.getElementById("player"),
+      url: "https://raw.githubusercontent.com/moroboxai/moroboxai-games/master/pong",
+      autoPlay: true,
+      scale: 1.5,
+      // URL of the main file of the agent
+      agents: {url: "/agent.js"}
+    });
+  </script>
+</body>
+</html>
+```
+
+Now open `localhost:8080` in your browser, and you should see the Pong game running.
+
+## agent.js
+
+For now the left bar doesn't do anything as there is no agent yet.
+
+Even worse, if you look at the developer console F12, you should see the error:
+
+```bash
+GET http://127.0.0.1:8080/agent.js 404 (Not Found)
+```
+
+Let's remedy to that by creating `sample/agent.js` with the snippet:
+
+```javascript filename="agent.js"
+function inputs(state) {
+  return {
+    up: state.ball.y < state.bars[0].y,
+    down: state.ball.y > state.bars[0].y
+  };
+}
+```
+
+Now just reload the page and you should see the left bar following the position
+of the ball.
+
+Head to [JavaScript][javascript] to learn more on how to write a JavaScript
+agent.
+
+## agent.lua
+
+If you prefer coding the agent in Lua, simply edit `index.html` to replace the line:
+
+```javascript
+      agents: {url: "/agent.js"}
+```
+
+With:
+
+```javascript
+      agents: {url: "/agent.lua"}
+```
+
+Then create `sample/agent.lua` with the snippet:
+
+```lua filename="agent.lua"
+function inputs(state)
+  d = {}
+  d["up"] = state["ball"]["y"] < state["bars"][1]["y"]
+  d["down"] = state["ball"]["y"] > state["bars"][1]["y"]
+  return d
+end
+```
+
+Now reload the page, and the Lua agent should be running.
+
+Head to [Lua][lua] to learn more on how to write a Lua
+agent.
+
+[http-server]: https://www.npmjs.com/package/http-server
+[npm]: https://www.npmjs.com/
+[python-http-server]: https://docs.python.org/3/library/http.server.html
+[nodejs]: https://nodejs.org/fr
+[local-http-server]: /learn/coding-agents/local-http-server
+[javascript]: /lean/coding-agents/javascript
+[lua]: /lean/coding-agents/lua

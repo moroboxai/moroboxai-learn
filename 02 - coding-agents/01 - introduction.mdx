@@ -1,0 +1,95 @@
+# Introduction
+
+MoroboxAI offers various ways for you to code an agent, ranging from the
+single-file single function agent with zero install, to the more complex
+machine learning powered agent with a [Node.js][nodejs] install.
+
+## Pong Game
+
+In the next sections, you will learn how you can code an agent for the
+famous Pong game. In this game, the bar on the right-side is controlled by
+a builtin agent of medium difficulty that you cannot modify. On the other
+hand, the bar on the left-side is controller by your own agent. A default
+agent will be provided so you can see how it works out of the box.
+However its strategy of following the ball it quite simple, and not enough
+to beat the secret builtin agent.
+
+## How to Get Started?
+
+To help you decide what approach fits the best your needs, and where to go
+next, here is a summary of the available solutions suggested in the next
+sections for coding an agent.
+
+### On the Web
+
+Directly code the agent in the browser with the code editor available on the
+pages of the games.
+
+Pros:
+
+-   Zero install
+-   Quick prototyping
+-   No need to run a local HTTP server
+
+Cons:
+
+-   Really basic code editor
+-   Restricted to a single-file agent
+-   Can't use external libraries
+
+### Standalone HTML File
+
+Embed a MoroboxAI game in an `index.html` file, and code the agent directly into that file.
+
+Pros:
+
+-   Zero install
+-   Quick prototyping
+-   No need to run a local HTTP server
+-   Use your preferred code editor
+
+Cons:
+
+-   Restricted to a single-file agent
+-   Can't use external libraries
+-   Can't import external files because of CORS errors
+-   Only really suitable for JavaScript agents
+
+### Local HTTP Server
+
+Run a local HTTP server, embed a MoroboxAI game in an `index.html` file,
+and load the agent from a separate file.
+
+Pros:
+
+-   Quick prototyping
+-   Close to real life conditions
+-   Use your preferred code editor
+-   Suitable for all languages supported by MoroboxAI
+
+Cons:
+
+-   Have to install a tool for running a local HTTP server
+
+### With npm
+
+Use [npm][npm] to setup a project configured with [Vite][vite] to easily
+code, test, bundle, and distribute your agent.
+
+Pros:
+
+-   Close to real life conditions
+-   Use your preferred code editor
+-   Suitable for all languages supported by MoroboxAI
+-   Can use external libraries
+-   Can code any kind of agent
+-   Can bundle your agent to a single-file for sharing with the community
+
+Cons:
+
+-   Have to install npm
+-   Require some good knowledge on npm
+
+[nodejs]: https://nodejs.org/fr
+[npm]: https://www.npmjs.com/
+[vite]: https://vitejs.dev/

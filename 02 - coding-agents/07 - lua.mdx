@@ -1,0 +1,48 @@
+import PlayerEditor from "@/components/Embed/PlayerEditor";
+
+# Lua
+
+MoroboxAI offers a convenient way for quickly getting started with coding agents
+right in your browser.
+
+## Web Code Editor
+
+On the page of each game available on the website, you can find the same
+configuration with a player on the left, and a code editor on the right.
+This code editor is your best choice for hacking around from anywhere,
+and with zero install. For each game, it is preloaded with a default dumb
+agent, and some help description, that can help you grasp the concept
+of the game, and figure out how to write your own better agent.
+
+However, the code editor voluntary has sparse features, because its goal
+is to offer a quick solution for writing single file single function agents,
+rather than being a full code editor that can compete with the one
+installed on your desktop.
+For that reason, it can quickly become too restrictive, and when it
+happens, it is suggested that you setup a fully working environment with
+the next section [On the Desktop][desktop].
+
+Here is an example of what the player and the code editor look like.
+On the top-right, you can select your preferred language for the agent from
+the languages supported by MoroboxAI.
+The Run button on the top-left allows you to inject the code into the game,
+and see the agent come to life!
+
+<PlayerEditor
+    playerOptions={{
+        gameId: "pong",
+        width: 170,
+        height: 128,
+        scale: 0.5
+    }}
+    editorOptions={{
+        agentUrl:
+            "https://raw.githubusercontent.com/moroboxai/moroboxai-games/master/pong/agent.*"
+    }}
+/>
+
+Now that you are more familiar with the code editor, head to [JavaScript][javascript]
+to learn more about the JavaScript API for writing agents.
+
+[desktop]: /learn/coding-agents/on-the-desktop
+[javascript]: /lean/coding-agents/javascript

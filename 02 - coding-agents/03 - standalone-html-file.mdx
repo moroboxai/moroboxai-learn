@@ -1,0 +1,90 @@
+# Standalone HTML File
+
+Embedding a MoroboxAI game in an `index.html` file, and coding the agent right
+into that file, is a quick and easy solution for hacking with MoroboxAI from
+anywhere.
+
+## Caveat
+
+This solution is quite limited compared to having a local
+[Node.js][nodejs] environment.
+
+It is also really only suitable for writing native JavaScript agents, as for
+other languages you will face CORS errors when trying to import files from your
+filesystem, forcing you to embed the code of the agent into the HTML, and
+preventing you to benefit from features such as code formatting, syntax highlighting,
+or multi-file agents.
+
+If you are willing for a lightweight, and nearly zero install solution, that
+offers more flexibility for writing agents in other languages, please check
+out [Local HTTP Server][local-http-server].
+
+## index.html
+
+For the solution suggested here, you really only have to create an `index.html`
+file anywhere on your desktop, then copy and paste the following content:
+
+```html filename="index.html"
+<html>
+<head>
+  <title>MoroboxAI Sample</title>
+  <!-- Library for embedding the MoroboxAI player -->
+  <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/moroboxai-player-web@0.1.0-alpha.47/lib/umd/moroboxai-player-web.min.js"
+  ></script>
+  <!-- Framework required by some MoroboxAI games -->
+  <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/moroxel8ai@latest/lib/umd/moroxel8ai.min.js"
+  ></script>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+  crossorigin="anonymous"
+  />
+</head>
+<body class="container">
+  <div class="row h-100 align-items-center justify-content-center">
+    <div class="col-auto">
+      <!-- Root element of the player -->
+      <div id="player"></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    // Code of your agent
+    class Agent {
+      inputs(state) {
+        return {
+          up: state.ball.y < state.bars[0].y,
+          down: state.ball.y > state.bars[0].y
+        };
+      }
+    }
+    
+    // Initialize the player and load the pong game
+    MoroboxAIPlayer.init({
+      element: document.getElementById("player"),
+      url: "https://raw.githubusercontent.com/moroboxai/moroboxai-games/master/pong",
+      autoPlay: true,
+      scale: 1.5,
+      agents: new Agent()
+    });
+  </script>
+</body>
+</html>
+```
+
+Now open the file in your browser, and you should see the Pong game running,
+with the bar on the left-side moving to follow the position of the ball.
+
+Now you can easily modify the code of the agent in your preferred code editor,
+reload the page, and see the changes!
+
+Head to [JavaScript][javascript] to learn more on how to write a JavaScript
+agent.
+
+[nodejs]: https://nodejs.org/fr
+[local-http-server]: /learn/coding-agents/local-http-server
+[javascript]: /lean/coding-agents/javascript
